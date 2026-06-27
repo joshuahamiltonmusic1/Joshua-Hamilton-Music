@@ -1,0 +1,106 @@
+/* 1. Global Reset & Body Styles */
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Helvetica Neue', Arial, sans-serif; }
+body { background-color: #0a0a0a; color: white; padding-bottom: 80px; }
+html { scroll-behavior: smooth; }
+
+/* 2. Composition Layout Sections */
+.theme-section { height: 100vh; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; scroll-snap-align: start; transition: background 0.5s ease; }
+#theme-1 { background-color: #1a1a2e; }
+#theme-2 { background-color: #16213e; }
+#theme-3 { background-color: #0f3460; }
+.content h2 { font-size: 3rem; margin-bottom: 1rem; letter-spacing: 2px; }
+
+/* 3. Persistent Audio Player */
+#persistent-player { position: fixed; bottom: 0; left: 0; width: 100%; height: 80px; background-color: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; border-top: 1px solid #333; z-index: 1000; }
+.player-controls { display: flex; align-items: center; gap: 20px; }
+button { padding: 10px 20px; font-size: 1rem; cursor: pointer; background-color: white; color: black; border: none; border-radius: 5px; font-weight: bold; transition: background 0.2s; }
+button:hover { background-color: #ccc; }
+
+/* 4. Site Navigation Header */
+#site-navigation { position: fixed; top: 0; left: 0; width: 100%; height: 60px; background-color: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); display: flex; justify-content: space-between; align-items: center; padding: 0 40px; z-index: 1000; border-bottom: 1px solid #333; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease; will-change: transform; }
+#site-navigation.scroll-hide { transform: translateY(-100%); opacity: 0; }
+.logo { font-weight: bold; letter-spacing: 2px; font-size: 1.2rem; }
+nav { display: flex; gap: 20px; }
+.nav-link { background: none; color: gray; border: none; font-size: 1rem; cursor: pointer; transition: color 0.3s; padding: 0; }
+.nav-link:hover, .nav-link.active { color: white; background: none; }
+
+/* 5. Mobile Title Defaults (Hidden on PC) */
+.mobile-scene-info { display: none; }
+.mobile-controls { display: flex; gap: 10px; justify-content: center; margin-top: 15px; }
+
+/* ==========================================
+   6. UNIFIED LAYOUT SYSTEMS (DESKTOP DEFAULT)
+   ========================================== */
+.global-hud-interface { position: fixed; left: 40px; top: 100px; width: 320px; z-index: 200; display: flex; flex-direction: column; }
+.sticky-info-box { background: rgba(10, 10, 10, 0.35); padding: 20px; border-radius: 10px 10px 0 0; backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.15); border-bottom: none; }
+.master-control-deck { background: rgba(10, 10, 10, 0.35); padding: 0 20px 20px 20px; border-radius: 0 0 10px 10px; backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.15); border-top: none; display: flex; flex-direction: column; gap: 12px; }
+.control-btn { background: rgba(255, 255, 255, 0.08); color: white; border: 1px solid rgba(255, 255, 255, 0.15); padding: 10px 16px; font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 600; border-radius: 6px; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; transition: all 0.2s ease; cursor: pointer; }
+.control-btn:hover { background: white; color: black; border-color: white; }
+.control-btn.active { background: rgba(46, 213, 115, 0.75); color: white; border-color: #2ed573; }
+
+/* ==========================================
+   7. MOBILE VIEW OVERWRITES 
+   ========================================== */
+@media (max-width: 768px) {
+    #site-navigation { padding: 0 20px; }
+    .logo { font-size: 1rem; }
+    nav { gap: 10px; }
+    .nav-link { font-size: 0.9rem; }
+    .content h2 { font-size: 2rem; padding: 0 15px; }
+    .content p { font-size: 0.9rem; padding: 0 15px; }
+    #persistent-player { height: auto; min-height: 80px; padding: 15px 0; }
+    .player-controls { flex-direction: column; gap: 8px; }
+    button { padding: 8px 16px; font-size: 0.9rem; }
+    #track-title { font-size: 0.85rem; }
+    #sound-design-container { height: 100vh !important; overflow-y: scroll !important; }
+
+    /* COMPLETELY HIDES THE DESKTOP HUD ON MOBILE */
+    .global-hud-interface { display: none !important; }
+
+    /* SHOWS THE PERMANENT SCENE TITLES AND BUTTONS */
+    .mobile-scene-info {
+        display: block;
+        position: absolute;
+        top: 65px; 
+        width: 100%;
+        text-align: center;
+        z-index: 10;
+        padding: 0 20px;
+    }
+    .mobile-scene-info h2 { font-size: 1.5rem; margin-bottom: 5px; text-shadow: 0 2px 6px rgba(0,0,0,0.9); }
+    .mobile-scene-info p { font-size: 0.85rem; color: #ddd; text-shadow: 0 1px 4px rgba(0,0,0,0.9); }
+    
+    .mobile-controls .control-btn { width: auto !important; padding: 8px 16px !important; }
+    
+    /* Pushes canvas down to clear the permanent UI */
+    .soundscape-canvas { width: 95% !important; height: auto !important; margin-top: 150px; }
+
+    .hotspot { padding: 6px 12px 6px 28px !important; font-size: 0.75rem !important; }
+    .pulse { left: 8px !important; width: 10px !important; height: 10px !important; }
+}
+
+/* 8. Interactive Soundscape */
+#sound-design-container { overflow-y: scroll; height: 100vh; scroll-snap-type: y proximity; }
+.soundscape-section { position: relative; width: 100%; height: 100vh; background-color: #0a0a0a; overflow: hidden; display: flex; justify-content: center; align-items: center; scroll-snap-align: center; }
+.soundscape-section::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; filter: blur(25px) brightness(0.35); transform: scale(1.1); z-index: 1; }
+
+.soundscape-canvas { position: relative; width: 100%; max-width: 1200px; aspect-ratio: 3 / 2; z-index: 2; }
+
+#savannah-soundscape::before { background-image: url('https://blogroll.oceanwp.org/wp-content/uploads/2023/06/owp-hope-africa-blog-item-003.jpg'); mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%); -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%); }
+.canvas-savannah { background: url('https://blogroll.oceanwp.org/wp-content/uploads/2023/06/owp-hope-africa-blog-item-003.jpg') no-repeat center center; background-size: contain; mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 94%, rgba(0,0,0,0) 100%); -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 94%, rgba(0,0,0,0) 100%); }
+
+#rainforest-soundscape::before { background-image: url('https://images.stockcake.com/public/0/8/a/08a8de0b-de68-4290-ad59-de0b2236faf2/misty-forest-stream-stockcake.jpg'); mask-image: linear-gradient(to top, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%); -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%); }
+.canvas-rainforest { background: url('https://images.stockcake.com/public/0/8/a/08a8de0b-de68-4290-ad59-de0b2236faf2/misty-forest-stream-stockcake.jpg') no-repeat center center; background-size: contain; mask-image: linear-gradient(to top, rgba(0,0,0,1) 94%, rgba(0,0,0,0) 100%); -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 94%, rgba(0,0,0,0) 100%); }
+
+.hidden { display: none !important; }
+
+.hotspot { position: absolute; background: rgba(0, 0, 0, 0.7); color: white; border: 1px solid rgba(255, 255, 255, 0.3); padding: 8px 18px 8px 35px; border-radius: 30px; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 500; letter-spacing: 0.3px; font-size: 0.85rem; display: flex; align-items: center; transition: all 0.3s ease; z-index: 20; }
+.hotspot:hover, .hotspot.playing { background: rgba(255, 255, 255, 0.9); color: black; }
+.pulse { position: absolute; left: 12px; width: 10px; height: 10px; background-color: #ff4757; border-radius: 50%; box-shadow: 0 0 0 0 rgba(255, 71, 87, 0.7); animation: pulse-animation 2s infinite; }
+.hotspot.playing .pulse { background-color: #2ed573; box-shadow: 0 0 0 0 rgba(46, 213, 115, 0.7); }
+
+@keyframes pulse-animation {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+}
