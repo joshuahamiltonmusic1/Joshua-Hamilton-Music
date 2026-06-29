@@ -12,6 +12,11 @@
     <link rel="stylesheet" href="styles.css">
     
     <style>
+        /* Header Non-Transparent Override */
+        #site-navigation {
+            background-color: #000000 !important;
+        }
+
         /* Base Side Dots Container Layout */
         .scene-nav-dots {
             position: fixed;
@@ -64,9 +69,9 @@
         }
 
         /* ==========================================
-           PC RESPONSIVE RULES (min-width: 769px)
+           PC RESPONSIVE RULES (Excludes Landscape Phones)
            ========================================== */
-        @media (min-width: 769px) {
+        @media (min-width: 769px) and (orientation: portrait), (min-width: 950px) and (orientation: landscape) {
             .mobile-only-controls {
                 display: none !important;
             }
@@ -88,15 +93,14 @@
             }
             
             .progress-bar-container {
-                position: relative !important; /* Disables the float overlay placement */
+                position: relative !important; 
                 bottom: auto !important;
                 left: auto !important;
                 width: 100% !important;
                 height: 6px !important;
-                margin-top: 12px !important; /* Slightly increased margin for the invisible click padding */
+                margin-top: 12px !important; 
                 background: rgba(255, 255, 255, 0.2);
                 border-radius: 3px;
-                /* Allow pseudo-element click targets to bleed outside visual boundaries */
                 overflow: visible !important; 
                 cursor: pointer !important;
                 pointer-events: auto !important;
@@ -124,9 +128,9 @@
         }
 
         /* ==========================================
-           MOBILE RESPONSIVE RULES (max-width: 768px)
+           MOBILE RESPONSIVE RULES (Includes Landscape Phones)
            ========================================== */
-        @media (max-width: 768px) {
+        @media (max-width: 768px), (max-width: 949px) and (orientation: landscape) {
             .pc-only-hud {
                 display: none !important;
             }
@@ -142,8 +146,12 @@
             }
 
             .soundscape-section {
-                scroll-snap-align: center !important;
+                scroll-snap-align: start !important;
                 scroll-snap-stop: always !important;
+                justify-content: flex-start !important;
+                padding-top: 100px !important;
+                padding-bottom: 60px !important;
+                height: auto !important;
             }
 
             .mobile-only-controls {
@@ -321,6 +329,7 @@
                 </div>
 
                 <div class="video-container">
+                    <canvas class="video-backdrop" id="canvas-backdrop-pigeon"></canvas>
                     <video id="vid-pigeon" src="./assets/audio/silly-pigeon-vid.mp4" playsinline style="width: 100%; display: block; transition: filter 1.5s ease-out;"></video>
                     <div class="progress-bar-container" data-scene="scene-pigeon">
                         <div class="progress-fill" id="progress-pigeon" style="width: 0%; height: 100%; background: #ffffff; pointer-events: none;"></div>
@@ -352,6 +361,7 @@
                 </div>
 
                 <div class="video-container">
+                    <canvas class="video-backdrop" id="canvas-backdrop-beauties"></canvas>
                     <video id="vid-beauties" src="./assets/audio/these-beauties-vid.mp4" playsinline style="width: 100%; display: block; transition: filter 1.5s ease-out;"></video>
                     <div class="progress-bar-container" data-scene="scene-beauties">
                         <div class="progress-fill" id="progress-beauties" style="width: 0%; height: 100%; background: #ffffff; pointer-events: none;"></div>

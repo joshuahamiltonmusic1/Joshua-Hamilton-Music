@@ -1,5 +1,5 @@
 // ==========================================
-// compositions.js - INSTANT REAL-TIME VOLUME ENGINE
+// compositions.js - INSTANT REAL-TIME VOLUME ENGINE WITH AMBIENT GLOW
 // ==========================================
 
 const compContainer = document.getElementById('theme-container');
@@ -22,7 +22,12 @@ if (compTitle && compDesc) {
     compDesc.style.transition = "opacity 0.4s ease, transform 0.4s ease";
 }
 
-// 1. Data Map for Videos & Audio
+// Helper to reliably check if we are in the mobile/landscape-phone layout
+const isMobileLayout = () => {
+    return window.matchMedia("(max-width: 768px), (max-width: 949px) and (orientation: landscape)").matches;
+};
+
+// 1. Data Map for Videos & Audio (Updated with Backdrop Canvas Contexts)
 const compData = {
     'scene-pigeon': {
         title: "The Young Offenders (Season 5 Ep. 6)",
@@ -30,6 +35,8 @@ const compData = {
         section: document.getElementById('scene-pigeon'),
         video: document.getElementById('vid-pigeon'),
         progressFill: document.getElementById('progress-pigeon'), 
+        canvas: document.getElementById('canvas-backdrop-pigeon'),
+        ctx: document.getElementById('canvas-backdrop-pigeon') ? document.getElementById('canvas-backdrop-pigeon').getContext('2d', { alpha: false }) : null,
         howl: new Howl({ src: ['./assets/audio/silly-pigeon.wav'], loop: false, volume: 0.8 }),
         musicVol: 0.8,
         videoVol: 1.0
@@ -40,6 +47,8 @@ const compData = {
         section: document.getElementById('scene-beauties'),
         video: document.getElementById('vid-beauties'),
         progressFill: document.getElementById('progress-beauties'), 
+        canvas: document.getElementById('canvas-backdrop-beauties'),
+        ctx: document.getElementById('canvas-backdrop-beauties') ? document.getElementById('canvas-backdrop-beauties').getContext('2d', { alpha: false }) : null,
         howl: new Howl({ src: ['./assets/audio/these-beauties.wav'], loop: false, volume: 0.8 }),
         musicVol: 0.8,
         videoVol: 1.0
@@ -83,6 +92,16 @@ function coreSyncLoop() {
 
     const scene = compData[activeCompID];
     if (!scene || scene.video.paused || isSeeking) return;
+
+    // --- REAL-TIME AMBIENT GLOW BACKDROP RENDER ENGINE ---
+    if (scene.canvas && scene.ctx) {
+        if (scene.canvas.width !== scene.video.videoWidth && scene.video.videoWidth > 0) {
+            // Downscale canvas internal dimensions to boost GPU performance significantly while preserving blur detail
+            scene.canvas.width = 320;
+            scene.canvas.height = 180;
+        }
+        scene.ctx.drawImage(scene.video, 0, 0, scene.canvas.width, scene.canvas.height);
+    }
 
     if (scene.video.duration) {
         const percentage = (scene.video.currentTime / scene.video.duration) * 100;
@@ -201,7 +220,6 @@ function runMusicVolumeUpdate(sceneID, val) {
     const scene = compData[sceneID];
     if (!scene) return;
     
-    // Direct, real-time value injection with no fade animations
     scene.musicVol = val;
     scene.howl.volume(val);
 
@@ -214,7 +232,6 @@ function runVideoVolumeUpdate(sceneID, val) {
     const scene = compData[sceneID];
     if (!scene) return;
 
-    // Direct, real-time value injection with no fade loops
     scene.videoVol = val;
     scene.video.volume = val;
 
@@ -310,7 +327,7 @@ document.querySelectorAll('.nav-dot-row').forEach(row => {
 // 5. UNTOUCHED PC TRACKPAD PHYSICS ENGINE (100% Isolated from Mobile)
 let wheelDebounce = false;
 window.addEventListener('wheel', (e) => {
-    if (window.innerWidth <= 768) return; 
+    if (isMobileLayout()) return; 
 
     if (wheelDebounce) return;
 
@@ -328,7 +345,7 @@ window.addEventListener('wheel', (e) => {
 // UNIVERSAL MULTI-LAYER MOB TRACKER SWITCH EXECUTION
 let mobileScrollTimeout;
 function unifiedScrollProcessor() {
-    if (window.innerWidth > 768) return; 
+    if (!isMobileLayout()) return; 
 
     clearTimeout(mobileScrollTimeout);
     mobileScrollTimeout = setTimeout(() => {

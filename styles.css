@@ -17,7 +17,7 @@ button { padding: 10px 20px; font-size: 1rem; cursor: pointer; background-color:
 button:hover { background-color: #ccc; }
 
 /* 4. Site Navigation Header */
-#site-navigation { position: fixed; top: 0; left: 0; width: 100%; height: 60px; background-color: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); display: flex; justify-content: space-between; align-items: center; padding: 0 40px; z-index: 1000; border-bottom: 1px solid #333; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease; will-change: transform; }
+#site-navigation { position: fixed; top: 0; left: 0; width: 100%; height: 60px; background-color: #000000 !important; backdrop-filter: blur(10px); display: flex; justify-content: space-between; align-items: center; padding: 0 40px; z-index: 9999999 !important; border-bottom: 1px solid #333; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease; will-change: transform; }
 #site-navigation.scroll-hide { transform: translateY(-100%); opacity: 0; }
 .logo { font-weight: bold; letter-spacing: 2px; font-size: 1.2rem; }
 nav { display: flex; gap: 20px; }
@@ -38,10 +38,36 @@ nav { display: flex; gap: 20px; }
 .control-btn:hover { background: white; color: black; border-color: white; }
 .control-btn.active { background: rgba(46, 213, 115, 0.75); color: white; border-color: #2ed573; }
 
+/* 8. Interactive Soundscape */
+#sound-design-container { overflow-y: scroll; height: 100vh; scroll-snap-type: y proximity; }
+.soundscape-section { position: relative; width: 100%; height: 100vh; background-color: #0a0a0a; overflow: hidden; display: flex; justify-content: center; align-items: center; scroll-snap-align: center; }
+.soundscape-section::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; filter: blur(25px) brightness(0.35); transform: scale(1.1); z-index: 1; }
+
+.soundscape-canvas { position: relative; width: 100%; max-width: 1200px; aspect-ratio: 3 / 2; z-index: 2; }
+
+#savannah-soundscape::before { background-image: url('https://blogroll.oceanwp.org/wp-content/uploads/2023/06/owp-hope-africa-blog-item-003.jpg'); mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%); -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%); }
+.canvas-savannah { background: url('https://blogroll.oceanwp.org/wp-content/uploads/2023/06/owp-hope-africa-blog-item-003.jpg') no-repeat center center; background-size: contain; mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 94%, rgba(0,0,0,0) 100%); -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 94%, rgba(0,0,0,0) 100%); }
+
+#rainforest-soundscape::before { background-image: url('https://images.stockcake.com/public/0/8/a/08a8de0b-de68-4290-ad59-de0b2236faf2/misty-forest-stream-stockcake.jpg'); mask-image: linear-gradient(to top, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%); -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%); }
+.canvas-rainforest { background: url('https://images.stockcake.com/public/0/8/a/08a8de0b-de68-4290-ad59-de0b2236faf2/misty-forest-stream-stockcake.jpg') no-repeat center center; background-size: contain; mask-image: linear-gradient(to top, rgba(0,0,0,1) 94%, rgba(0,0,0,0) 100%); -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 94%, rgba(0,0,0,0) 100%); }
+
+.hidden { display: none !important; }
+
+.hotspot { position: absolute; background: rgba(0, 0, 0, 0.7); color: white; border: 1px solid rgba(255, 255, 255, 0.3); padding: 8px 18px 8px 35px; border-radius: 30px; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 500; letter-spacing: 0.3px; font-size: 0.85rem; display: flex; align-items: center; transition: all 0.3s ease; z-index: 20; }
+.hotspot:hover, .hotspot.playing { background: rgba(255, 255, 255, 0.9); color: black; }
+.pulse { position: absolute; left: 12px; width: 10px; height: 10px; background-color: #ff4757; border-radius: 50%; box-shadow: 0 0 0 0 rgba(255, 71, 87, 0.7); animation: pulse-animation 2s infinite; }
+.hotspot.playing .pulse { background-color: #2ed573; box-shadow: 0 0 0 0 rgba(46, 213, 115, 0.7); }
+
+@keyframes pulse-animation {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+}
+
 /* ==========================================
    7. MOBILE VIEW OVERWRITES 
    ========================================== */
-@media (max-width: 768px) {
+@media (max-width: 950px) {
     #site-navigation { padding: 0 20px; }
     .logo { font-size: 1rem; }
     nav { gap: 10px; }
@@ -77,30 +103,54 @@ nav { display: flex; gap: 20px; }
 
     .hotspot { padding: 6px 12px 6px 28px !important; font-size: 0.75rem !important; }
     .pulse { left: 8px !important; width: 10px !important; height: 10px !important; }
+
+    /* Resolves Portrait/Landscape Scene Gaps */
+    .soundscape-section {
+        height: auto !important;
+        min-height: auto !important;
+        padding-top: 100px !important; /* Clears fixed black header */
+        padding-bottom: 150px !important; /* Defines tight space between scenes */
+        justify-content: flex-start !important;
+    }
+}
+/* Ambient Blurred Video Background Layout */
+.video-container {
+    position: relative;
+    overflow: visible; 
 }
 
-/* 8. Interactive Soundscape */
-#sound-design-container { overflow-y: scroll; height: 100vh; scroll-snap-type: y proximity; }
-.soundscape-section { position: relative; width: 100%; height: 100vh; background-color: #0a0a0a; overflow: hidden; display: flex; justify-content: center; align-items: center; scroll-snap-align: center; }
-.soundscape-section::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; filter: blur(25px) brightness(0.35); transform: scale(1.1); z-index: 1; }
+.video-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; 
+    filter: blur(45px) opacity(0.65) brightness(0.6);
+    transform: scale(1.15); 
+    pointer-events: none;
+}
+/* Ambient Blur Real-Time Backdrop Layering Configuration */
+.soundscape-section {
+    position: relative;
+    z-index: 1; /* Establishes absolute depth baseline */
+}
 
-.soundscape-canvas { position: relative; width: 100%; max-width: 1200px; aspect-ratio: 3 / 2; z-index: 2; }
+.video-container {
+    position: relative !important;
+    overflow: visible !important; /* Forces the blur to bleed past the video width limits */
+    width: 100%;
+}
 
-#savannah-soundscape::before { background-image: url('https://blogroll.oceanwp.org/wp-content/uploads/2023/06/owp-hope-africa-blog-item-003.jpg'); mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%); -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%); }
-.canvas-savannah { background: url('https://blogroll.oceanwp.org/wp-content/uploads/2023/06/owp-hope-africa-blog-item-003.jpg') no-repeat center center; background-size: contain; mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 94%, rgba(0,0,0,0) 100%); -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 94%, rgba(0,0,0,0) 100%); }
-
-#rainforest-soundscape::before { background-image: url('https://images.stockcake.com/public/0/8/a/08a8de0b-de68-4290-ad59-de0b2236faf2/misty-forest-stream-stockcake.jpg'); mask-image: linear-gradient(to top, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%); -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%); }
-.canvas-rainforest { background: url('https://images.stockcake.com/public/0/8/a/08a8de0b-de68-4290-ad59-de0b2236faf2/misty-forest-stream-stockcake.jpg') no-repeat center center; background-size: contain; mask-image: linear-gradient(to top, rgba(0,0,0,1) 94%, rgba(0,0,0,0) 100%); -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 94%, rgba(0,0,0,0) 100%); }
-
-.hidden { display: none !important; }
-
-.hotspot { position: absolute; background: rgba(0, 0, 0, 0.7); color: white; border: 1px solid rgba(255, 255, 255, 0.3); padding: 8px 18px 8px 35px; border-radius: 30px; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 500; letter-spacing: 0.3px; font-size: 0.85rem; display: flex; align-items: center; transition: all 0.3s ease; z-index: 20; }
-.hotspot:hover, .hotspot.playing { background: rgba(255, 255, 255, 0.9); color: black; }
-.pulse { position: absolute; left: 12px; width: 10px; height: 10px; background-color: #ff4757; border-radius: 50%; box-shadow: 0 0 0 0 rgba(255, 71, 87, 0.7); animation: pulse-animation 2s infinite; }
-.hotspot.playing .pulse { background-color: #2ed573; box-shadow: 0 0 0 0 rgba(46, 213, 115, 0.7); }
-
-@keyframes pulse-animation {
-    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
-    70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
-    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+.video-backdrop {
+    position: absolute;
+    top: -10%;
+    left: -15%;
+    width: 130%; /* Stretches the blurred layer across the dark border pillars */
+    height: 120%;
+    z-index: -1; /* Tucks the glow behind the clear video track */
+    filter: blur(50px) brightness(0.5) contrast(1.1); /* Creates the deep ambient vignette */
+    object-fit: fill; /* Prevents aspect ratio clip bounding boxes */
+    pointer-events: none;
+    opacity: 0.75;
 }
