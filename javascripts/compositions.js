@@ -36,7 +36,7 @@ const compData = {
         progressFill: document.getElementById('progress-pigeon'), 
         canvas: document.getElementById('canvas-backdrop-pigeon'),
         ctx: document.getElementById('canvas-backdrop-pigeon') ? document.getElementById('canvas-backdrop-pigeon').getContext('2d', { alpha: false }) : null,
-        howl: new Howl({ src: ['../assets/audio/silly-pigeon.wav'], loop: false, volume: 0.8 }),
+        howl: new Howl({ src: ['../assets/audio/silly-pigeon.mp3'], loop: false, volume: 0.8 }),
         musicVol: 0.8,
         videoVol: 1.0
     },
@@ -48,7 +48,7 @@ const compData = {
         progressFill: document.getElementById('progress-beauties'), 
         canvas: document.getElementById('canvas-backdrop-beauties'),
         ctx: document.getElementById('canvas-backdrop-beauties') ? document.getElementById('canvas-backdrop-beauties').getContext('2d', { alpha: false }) : null,
-        howl: new Howl({ src: ['../assets/audio/these-beauties.wav'], loop: false, volume: 0.8 }),
+        howl: new Howl({ src: ['../assets/audio/these-beauties.mp3'], loop: false, volume: 0.8 }),
         musicVol: 0.8,
         videoVol: 1.0
     }
