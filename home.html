@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | Joshua Hamilton</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/styles.css">
+    <style>
+        .home-page-wrapper {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 140px 40px 60px 40px;
+            background-color: #0a0a0a;
+            box-sizing: border-box;
+        }
+        .directory-container {
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+        .directory-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            width: 100%;
+        }
+        .portal-card {
+            position: relative;
+            background: rgba(20, 20, 20, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 40px;
+            backdrop-filter: blur(20px);
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 200px;
+            overflow: hidden;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, background-color 0.3s ease;
+        }
+        .card-glow-backdrop {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.02) 0%, rgba(0, 0, 0, 0) 80%);
+            z-index: -1;
+            pointer-events: none;
+        }
+        .portal-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(219, 176, 74, 0.3);
+            background: rgba(255, 255, 255, 0.02);
+        }
+       /* UPDATED HOVER GLOW STATE: */
+.portal-card .card-glow-backdrop {
+    position: absolute; /* Already exists in your code */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.02) 0%, rgba(0, 0, 0, 0) 80%);
+    z-index: -1;
+    pointer-events: none;
+    /* Added a smooth transition property for the transform scale */
+    transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.portal-card:hover .card-glow-backdrop {
+    /* Dialed the opacity from 0.06 up to 0.22 and compressed the fade boundary for prominence */
+    background: radial-gradient(circle, rgba(219, 176, 74, 0.42) 0%, rgba(0, 0, 0, 0) 90%);
+    /* Expands the glow out visually past the card walls on hover */
+    transform: translate(-50%, -50%) scale(1.4); 
+        }
+        .portal-card h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0;
+            margin-bottom: 8px;
+            letter-spacing: -0.3px;
+            transition: color 0.3s ease;
+        }
+        .portal-card:hover h2 { color: #ffe082; }
+        .portal-card h3 {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.4);
+            margin: 0;
+            margin-bottom: 16px;
+        }
+        .portal-card p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.6);
+            margin: 0;
+        }
+        @media (max-width: 768px) {
+            .home-page-wrapper { padding: 110px 20px 40px 20px; }
+            .portal-card { padding: 30px; min-height: auto; }
+        }
+    </style>
+</head>
+<body>
+
+<header id="site-navigation">
+    <div class="nav-top-row">
+        <a href="./home.html" class="logo" style="text-decoration: none; font-weight: 700;">Joshua Hamilton</a>
+        <div class="header-actions">
+            <a href="./htmls/about.html" class="action-btn" id="btn-about" style="text-decoration: none; line-height: normal; display: flex; align-items: center;">About</a>
+            <a href="./htmls/contact.html" class="action-btn" id="btn-contact" style="text-decoration: none; line-height: normal; display: flex; align-items: center;">Contact</a>
+        </div>
+    </div>
+    
+    <div class="nav-bottom-row">
+        <nav class="dropdown-nav">
+            <a href="./home.html" class="nav-link" style="font-family: 'Inter', sans-serif; font-weight: 500; font-size: 0.8rem; color: #ffffff; text-decoration: none;">Home</a>
+            
+            <div class="dropdown-group">
+                <a href="./htmls/projbuff.html" class="nav-link dropdown-trigger" style="text-decoration: none;">Projects</a>
+            </div>
+            
+            <div class="dropdown-group">
+                <a href="./htmls/compbuff.html" class="nav-link dropdown-trigger" style="text-decoration: none;">Compositions</a>
+            </div>
+
+            <div class="dropdown-group">
+                <a href="./htmls/sdbuff.html" class="nav-link dropdown-trigger" style="text-decoration: none;">Sound Design</a>
+            </div>
+        </nav>
+    </div>
+    <button id="manual-header-toggle" aria-label="Toggle Navigation Panel">
+        <span class="toggle-arrow">▲</span>
+    </button>
+</header>
+
+<main class="home-page-wrapper">
+    <div class="directory-container">
+        <div class="directory-header" style="text-align: left;">
+            <h1 style="font-size: 2.5rem; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; color: #ffffff;">Joshua Hamilton</h1>
+            <p style="font-size: 1.1rem; color: rgba(255, 255, 255, 0.5); font-family: 'Inter', sans-serif; margin: 0;">Composer, Producer & Multi-Instrumentalist</p>
+        </div>
+
+        <div class="directory-grid">
+            <a href="./htmls/projbuff.html" class="portal-card">
+                <div class="card-glow-backdrop"></div>
+                <div>
+                    <h3>Portfolio</h3>
+                    <h2>Projects</h2>
+                </div>
+                <p>Film & television scoring showreel featuring works by Joshua Hamilton.</p>
+            </a>
+
+            <a href="./htmls/compbuff.html" class="portal-card">
+                <div class="card-glow-backdrop"></div>
+                <div>
+                    <h3>Works Catalogue</h3>
+                    <h2>Compositions</h2>
+                </div>
+                <p>Vast original musical works, and exciting productions.</p>
+            </a>
+
+            <a href="./htmls/sdbuff.html" class="portal-card">
+                <div class="card-glow-backdrop"></div>
+                <div>
+                    <h3>Audio Experiences</h3>
+                    <h2>Sound Design</h2>
+                </div>
+                <p>Custom atmospheric environments, sonic world-building and cinematic foley.</p>
+            </a>
+
+            <a href="./htmls/about.html" class="portal-card">
+                <div class="card-glow-backdrop"></div>
+                <div>
+                    <h3>Biography</h3>
+                    <h2>About</h2>
+                </div>
+                <p>Academic profile, industry credentials, musical philosophy, and complete project production credits.</p>
+            </a>
+
+            <a href="./htmls/contact.html" class="portal-card">
+                <div class="card-glow-backdrop"></div>
+                <div>
+                    <h3>Inquiries</h3>
+                    <h2>Contact</h2>
+                </div>
+                <p>Direct communication pipeline for project bookings, structural licensing, and creative collaborations.</p>
+            </a>
+        </div>
+    </div>
+</main>
+
+<script>
+    (function() {
+        const navPanel = document.getElementById('site-navigation');
+        const toggleButton = document.getElementById('manual-header-toggle');
+        if (navPanel && toggleButton) {
+            toggleButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                navPanel.classList.toggle('nav-panel-hidden');
+            });
+        }
+    })();
+</script>
+<script src="./javascripts/imageloader.js" defer></script>
+</body>
+</html>

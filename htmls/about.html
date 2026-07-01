@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | Joshua Hamilton</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .profile-image-portrait {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 6px;
+            display: block;
+        }
+
+        /* -------------------------------------------------------------
+           ISOLATED DROPDOWN SYSTEM: Zero Horizontal Bleeding
+        ------------------------------------------------------------- */
+        .dropdown-group {
+            position: relative;
+            display: inline-block;
+        }
+
+        #manual-header-toggle {
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+        }
+
+        /* -------------------------------------------------------------
+           PROFILE CONTENT CARD LAYOUT
+        ------------------------------------------------------------- */
+        .about-credits-section {
+            margin-top: 20px;
+            margin-bottom: 72px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .about-credits-section h3 {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 14px;
+        }
+        .credits-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .credits-list li {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.4;
+        }
+        .credits-list strong {
+            color: #ffffff;
+            font-weight: 600;
+        }
+        .credits-list em {
+            color: rgba(255, 255, 255, 0.6);
+            font-style: italic;
+        }
+
+        .credit-link {
+            color: #dbb04a;
+            font-style: italic;
+            text-decoration: none;
+            border-bottom: 1px dashed rgba(219, 176, 74, 0.3);
+            transition: color 0.2s ease, border-color 0.2s ease;
+        }
+        .credit-link:hover {
+            color: #ffe082;
+            border-bottom: 1px solid #ffe082;
+        }
+    </style>
+</head>
+<body>
+
+<header id="site-navigation">
+    <div class="nav-top-row">
+        <a href="../home.html" class="logo" style="text-decoration: none; font-weight: 700;">Joshua Hamilton</a>
+        <div class="header-actions">
+            <a href="./about.html" class="action-btn" id="btn-about" style="text-decoration: none; line-height: normal; display: flex; align-items: center; color: #ffffff;">About</a>
+            <a href="./contact.html" class="action-btn" id="btn-contact" style="text-decoration: none; line-height: normal; display: flex; align-items: center;">Contact</a>
+        </div>
+    </div>
+    
+    <div class="nav-bottom-row">
+        <nav class="dropdown-nav">
+            <a href="../home.html" class="nav-link" style="font-family: 'Inter', sans-serif; font-weight: 500; font-size: 0.8rem; color: rgba(255, 255, 255, 0.65); text-decoration: none; transition: color 0.2s ease;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='rgba(255, 255, 255, 0.65)'">Home</a>
+            
+            <!-- Projects Routing Setup -->
+            <div class="dropdown-group">
+                <a href="./projbuff.html" class="nav-link dropdown-trigger" style="text-decoration: none;">Projects</a>
+            </div>
+            
+            <!-- Compositions Routing Setup -->
+            <div class="dropdown-group">
+                <a href="./compbuff.html" class="nav-link dropdown-trigger" style="text-decoration: none;">Compositions</a>
+            </div>
+
+            <!-- Sound Design Routing Setup -->
+            <div class="dropdown-group">
+                <a href="./sdbuff.html" class="nav-link dropdown-trigger" style="text-decoration: none;">Sound Design</a>
+            </div>
+        </nav>
+    </div>
+
+    <button id="manual-header-toggle" aria-label="Toggle Navigation Panel">
+        <span class="toggle-arrow">▲</span>
+    </button>
+</header>
+
+<main class="about-page-wrapper">
+    <div class="about-content-card">
+        <div class="about-glow-backdrop"></div>
+        
+        <div class="about-grid">
+            <div class="about-image-column">
+                <div class="profile-image-placeholder" style="padding: 0; overflow: hidden;">
+                    <img src="../assets/Images/joshua-hamilton-portrait.webp" alt="Joshua Hamilton Portrait" class="profile-image-portrait">
+                </div>
+            </div>
+            <div class="about-text-column">
+                <h1>Joshua Hamilton</h1>
+                <h2>Composer & Sound Designer</h2>
+                <p>Joshua Hamilton is an accomplished composer, producer, and multi-instrumentalist with over 13 years of musical experience. Currently in his third year of college, Joshua is studying piano performance, sound design, music technology, and narrative composition in MTU.</p>
+                
+                <div class="about-credits-section">
+                    <h3>Selected Credits</h3>
+                    <ul class="credits-list">
+                        <li><strong>"The Young Offenders" (Season 5)</strong> — <a href="./tyo.html#scene-pigeon" class="credit-link">Music & Score Production</a></li>
+                    </ul>
+                </div>
+
+                <h3 class="bio-subheading" style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: rgba(255, 255, 255, 0.4); margin-bottom: 8px;">Industry Profile</h3>
+                <p>Bridging the gap between academic mastery and high-tier industry production, Joshua has spent seven years cultivating a signature sonic footprint as a producer.</p>
+                
+                <h3 class="bio-subheading" style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: rgba(255, 255, 255, 0.4); margin-top: 24px; margin-bottom: 8px;">Television & Cinema</h3>
+                <p>His versatility as a dramatic storyteller was recently demonstrated on the score for the hit television series "The Young Offenders," where he worked closely alongside acclaimed composer Ray Harmon.</p>
+                
+                <h3 class="bio-subheading" style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: rgba(255, 255, 255, 0.4); margin-top: 24px; margin-bottom: 8px;">Sonic Philosophy</h3>
+                <p>Whether crafting intimate, piano-driven themes or engineering immersive, multi-layered electronic soundscapes, Joshua delivers evocative, custom-tailored music that elevates visual narratives and shapes unforgettable cinematic experiences.</p>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    (function() {
+        const navPanel = document.getElementById('site-navigation');
+        const toggleButton = document.getElementById('manual-header-toggle');
+        if (navPanel && toggleButton) {
+            toggleButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                navPanel.classList.toggle('nav-panel-hidden');
+            });
+        }
+    })();
+</script>
+<script src="../javascripts/imageloader.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Joshua Hamilton</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        /* -------------------------------------------------------------
+           ISOLATED DROPDOWN SYSTEM: Zero Horizontal Bleeding
+        ------------------------------------------------------------- */
+        .dropdown-group {
+            position: relative;
+            display: inline-block;
+        }
+
+        #manual-header-toggle {
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+        }
+
+        /* -------------------------------------------------------------
+           CONTACT PAGE SPECIFIC STYLES
+        ------------------------------------------------------------- */
+        .contact-form-group {
+            margin-bottom: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .contact-form-group label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .contact-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 6px;
+            padding: 12px 16px;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            transition: border-color 0.2s ease, background-color 0.2s ease;
+            outline: none;
+        }
+
+        .contact-input:focus {
+            border-color: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        textarea.contact-input {
+            resize: vertical;
+            min-height: 140px;
+        }
+
+        .submit-btn {
+            background: #ffffff;
+            color: #000000;
+            border: none;
+            padding: 14px 28px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: auto;
+        }
+
+        .submit-btn:hover {
+            background-color: #e5e5e5;
+        }
+
+        .submit-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* -------------------------------------------------------------
+           ASYNC NOTIFICATION DESIGN HINTS
+        ------------------------------------------------------------- */
+        #form-status-msg {
+            margin-top: 16px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: none;
+            font-family: 'Inter', sans-serif;
+        }
+        #form-status-msg.success {
+            color: #2ed573;
+        }
+        #form-status-msg.error {
+            color: #ff4757;
+        }
+    </style>
+</head>
+<body>
+
+<header id="site-navigation">
+    <div class="nav-top-row">
+        <a href="../home.html" class="logo" style="text-decoration: none; font-weight: 700;">Joshua Hamilton</a>
+        <div class="header-actions">
+            <a href="./about.html" class="action-btn" id="btn-about" style="text-decoration: none; line-height: normal; display: flex; align-items: center;">About</a>
+            <a href="./contact.html" class="action-btn" id="btn-contact" style="text-decoration: none; line-height: normal; display: flex; align-items: center; color: #ffffff;">Contact</a>
+        </div>
+    </div>
+    
+    <div class="nav-bottom-row">
+        <nav class="dropdown-nav">
+            <a href="../home.html" class="nav-link" style="font-family: 'Inter', sans-serif; font-weight: 500; font-size: 0.8rem; color: rgba(255, 255, 255, 0.65); text-decoration: none; transition: color 0.2s ease;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='rgba(255, 255, 255, 0.65)'">Home</a>
+            
+            <!-- Projects Routing Setup -->
+            <div class="dropdown-group">
+                <a href="./projbuff.html" class="nav-link dropdown-trigger" style="text-decoration: none;">Projects</a>
+            </div>
+            
+            <!-- Compositions Routing Setup -->
+            <div class="dropdown-group">
+                <a href="./compbuff.html" class="nav-link dropdown-trigger" style="text-decoration: none;">Compositions</a>
+            </div>
+
+            <!-- Sound Design Routing Setup -->
+            <div class="dropdown-group">
+                <a href="./sdbuff.html" class="nav-link dropdown-trigger" style="text-decoration: none;">Sound Design</a>
+            </div>
+        </nav>
+    </div>
+
+    <button id="manual-header-toggle" aria-label="Toggle Navigation Panel">
+        <span class="toggle-arrow">▲</span>
+    </button>
+</header>
+
+<main class="about-page-wrapper">
+    <div class="about-content-card" style="max-width: 650px;">
+        <div class="about-glow-backdrop"></div>
+        
+        <div class="contact-header" style="margin-bottom: 32px;">
+            <h1 style="font-size: 2.25rem; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 4px; color: #ffffff;">Contact</h1>
+            <p style="font-size: 0.95rem; color: #dbb04a; font-family: 'Inter', sans-serif; margin-bottom: 0;"><a href="mailto:joshuahamiltonmusic1@gmail.com" style="color: #dbb04a; text-decoration: none; border-bottom: 1px dashed rgba(219, 176, 74, 0.4); transition: color 0.2s ease, border-color 0.2s ease;">joshuahamiltonmusic1@gmail.com</a></p>
+            
+            <div style="margin-top: 20px; margin-bottom: 20px; border-top: 1px solid rgba(255, 255, 255, 0.08);"></div>
+            
+            <h1 style="font-size: 2.25rem; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 6px; color: #ffffff;">Get in Touch</h1>
+            <h2 style="font-size: 1rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255, 255, 255, 0.5); margin: 0;">Project Inquiries & Collaborations</h2>
+
+            <div style="margin-top: 20px; margin-bottom: 24px; border-top: 1px solid rgba(255, 255, 255, 0.08);"></div>
+        </div>
+
+        <form id="contact-portfolio-form" action="https://api.web3forms.com/submit" method="POST">
+            <!-- Web3Forms Mandatory Configuration Node Key Alias -->
+            <!-- Paste your generated token value string right inside the value="" attribute down below -->
+            <input type="hidden" name="access_key" value="b09cf95a-0e74-4523-aeb8-9cbb92ecf547">
+            
+            <!-- Honeypot Bot Spam Check Engine Block -->
+            <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
+            <div class="contact-form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" class="contact-input" required placeholder="Your name">
+            </div>
+
+            <div class="contact-form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" class="contact-input" required placeholder="your.email@example.com">
+            </div>
+
+            <div class="contact-form-group">
+                <label for="subject">Subject</label>
+                <input type="text" id="subject" name="subject" class="contact-input" required placeholder="How can I help you?">
+            </div>
+
+            <div class="contact-form-group" style="margin-bottom: 32px;">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" class="contact-input" required placeholder="Tell me about your project..."></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submit-button-text">Send Message</button>
+            <div id="form-status-msg"></div>
+        </form>
+    </div>
+</main>
+
+<script>
+    (function() {
+        const navPanel = document.getElementById('site-navigation');
+        const toggleButton = document.getElementById('manual-header-toggle');
+        if (navPanel && toggleButton) {
+            toggleButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                navPanel.classList.toggle('nav-panel-hidden');
+            });
+        }
+
+        // Asynchronous Form Engine Hook
+        const contactForm = document.getElementById('contact-portfolio-form');
+        const statusMessage = document.getElementById('form-status-msg');
+        const submitBtnText = document.getElementById('submit-button-text');
+
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                submitBtnText.textContent = "Sending...";
+                submitBtnText.disabled = true;
+                statusMessage.style.display = "none";
+                statusMessage.className = "";
+
+                const formData = new FormData(contactForm);
+                const jsonObject = Object.fromEntries(formData);
+                const jsonPayload = JSON.stringify(jsonObject);
+
+                fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: jsonPayload
+                })
+                .then(async (response) => {
+                    let res = await response.json();
+                    if (response.status === 200) {
+                        statusMessage.textContent = "Message sent successfully!";
+                        statusMessage.className = "success";
+                        statusMessage.style.display = "block";
+                        contactForm.reset();
+                    } else {
+                        statusMessage.textContent = res.message || "Something went wrong.";
+                        statusMessage.className = "error";
+                        statusMessage.style.display = "block";
+                    }
+                })
+                .catch(error => {
+                    statusMessage.textContent = "Network error. Please try again later.";
+                    statusMessage.className = "error";
+                    statusMessage.style.display = "block";
+                })
+                .then(() => {
+                    submitBtnText.textContent = "Send Message";
+                    submitBtnText.disabled = false;
+                });
+            });
+        }
+    })();
+</script>
+<script src="../javascripts/imageloader.js" defer></script>
+</body>
+</html>

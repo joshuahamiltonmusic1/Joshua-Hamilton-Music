@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sound Design | Joshua Hamilton</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        /* -------------------------------------------------------------
+           ISOLATED DROPDOWN SYSTEM: Zero Horizontal Bleeding
+        ------------------------------------------------------------- */
+        .dropdown-group {
+            position: relative;
+            display: inline-block;
+        }
+
+        #manual-header-toggle {
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+        }
+
+        .dropdown-nav .dropdown-group a.dropdown-trigger {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .action-btn {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.65);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .action-btn:hover {
+            color: #ffffff;
+        }
+
+        /* -------------------------------------------------------------
+           DIRECTORY STACK LAYOUT & PORTAL DESIGN
+        ------------------------------------------------------------- */
+        .buffer-page-wrapper {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 160px 40px 80px 40px;
+            background-color: #050505;
+            box-sizing: border-box;
+        }
+
+        .buffer-container {
+            width: 100%;
+            max-width: 750px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .buffer-header {
+            text-align: left;
+        }
+
+        .buffer-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin: 0;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+
+        .buffer-header p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin: 0;
+        }
+
+        .buffer-column {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            width: 100%;
+        }
+
+        .buffer-card {
+            position: relative;
+            background: rgba(15, 15, 15, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 40px;
+            backdrop-filter: blur(25px);
+            text-decoration: none;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 180px;
+            overflow: hidden;
+            box-sizing: border-box;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, background-color 0.3s ease;
+        }
+
+        .card-image-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.40; 
+            z-index: -2;
+            pointer-events: none;
+            transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .card-darkener {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #050505; 
+            opacity: 0.05; /* Increased resting brightness */
+            z-index: -1;
+            pointer-events: none;
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .buffer-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(219, 176, 74, 0.3);
+            background: rgba(20, 20, 20, 0.75);
+        }
+
+        /* Matches your exact target specifications */
+        .buffer-card:hover .card-darkener {
+            opacity: 0.20 !important;
+        }
+
+        .buffer-card:hover .card-image-bg {
+            opacity: 0.75 !important;
+            transform: scale(1.02);
+        }
+
+        .card-left-block h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0;
+            margin-bottom: 6px;
+            letter-spacing: -0.3px;
+            transition: color 0.3s ease;
+        }
+
+        .buffer-card:hover h2 {
+            color: #ffe082;
+        }
+
+        .card-left-block h3 {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.4);
+            margin: 0;
+            margin-bottom: 14px;
+        }
+
+        .card-left-block p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.6);
+            margin: 0;
+        }
+
+        /* -------------------------------------------------------------
+           TECHNICAL METADATA BADGE DESIGNS
+        ------------------------------------------------------------- */
+        .card-right-meta {
+            text-align: right;
+            flex-shrink: 0;
+            padding-left: 20px;
+        }
+
+        .meta-counter {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #dbb04a;
+            line-height: 1.2;
+            margin-bottom: 4px;
+        }
+
+        .meta-label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        @media (max-width: 768px) {
+            .buffer-page-wrapper {
+                padding: 120px 20px 60px 20px;
+            }
+            .buffer-card {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 30px;
+                gap: 24px;
+            }
+            .card-right-meta {
+                text-align: left;
+                padding-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header id="site-navigation">
+    <div class="nav-top-row">
+        <a href="../home.html" class="logo" style="text-decoration: none; font-weight: 700;">Joshua Hamilton</a>
+        <div class="header-actions">
+            <a href="./about.html" class="action-btn" id="btn-about" style="text-decoration: none; line-height: normal; display: flex; align-items: center;">About</a>
+            <a href="./contact.html" class="action-btn" id="btn-contact" style="text-decoration: none; line-height: normal; display: flex; align-items: center;">Contact</a>
+        </div>
+    </div>
+    
+    <div class="nav-bottom-row">
+        <nav class="dropdown-nav">
+            <a href="../home.html" class="nav-link" style="font-family: 'Inter', sans-serif; font-weight: 500; font-size: 0.8rem; color: rgba(255, 255, 255, 0.65); text-decoration: none; transition: color 0.2s ease;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='rgba(255, 255, 255, 0.65)'">Home</a>
+            
+            <!-- Projects Routing Setup -->
+            <div class="dropdown-group">
+                <a href="./projbuff.html" class="nav-link dropdown-trigger" style="text-decoration: none;">Projects</a>
+            </div>
+            
+            <!-- Compositions Routing Setup -->
+            <div class="dropdown-group">
+                <a href="./compbuff.html" class="nav-link dropdown-trigger" style="text-decoration: none;">Compositions</a>
+            </div>
+
+            <!-- Sound Design Routing Setup -->
+            <div class="dropdown-group">
+                <a href="./sdbuff.html" class="nav-link dropdown-trigger" style="text-decoration: none; color: #ffffff;">Sound Design</a>
+            </div>
+        </nav>
+    </div>
+
+    <button id="manual-header-toggle" aria-label="Toggle Navigation Panel">
+        <span class="toggle-arrow">▲</span>
+    </button>
+</header>
+
+<main class="buffer-page-wrapper">
+    <div class="buffer-container">
+        
+        <div class="buffer-header">
+            <h1>Sound Design</h1>
+            <p>Sonic environments, synthesized textures, and immersive audio design.</p>
+        </div>
+
+        <div class="buffer-column">
+            
+            <!-- Collection Item 1: Elevate -->
+            <a href="./sounddesign.html" class="buffer-card">
+                <div class="card-image-bg" style="background-image: url('../assets/Images/elevate.webp');"></div>
+                <div class="card-darkener"></div>
+                
+                <div class="card-left-block">
+                    <h3>immersive & realistic audio scenes</h3>
+                    <h2>Elevate</h2>
+                    <p>A strange and haunting chase through a corrupted elevator.</p>
+                </div>
+                
+                <div class="card-right-meta">
+                    <div class="meta-counter">01</div>
+                    <div class="meta-label">track</div>
+                </div>
+            </a>
+
+            <!-- Collection Item 2: Submersion -->
+<a href="./submersion.html" class="buffer-card">
+    <div class="card-image-bg" style="background-image: url('../assets/Images/submersion.webp');"></div>
+    <div class="card-darkener"></div>
+    
+    <div class="card-left-block">
+        <h3>immersive & realistic audio scenes</h3>
+        <h2>Submersion</h2>
+        <p>An immersive and dangerous deep-sea environment exploration.</p>
+    </div>
+    
+    <div class="card-right-meta">
+        <div class="meta-counter">01</div>
+        <div class="meta-label">Track</div>
+    </div>
+</a>
+
+        </div>
+    </div>
+</main>
+
+<script>
+    (function() {
+        const navPanel = document.getElementById('site-navigation');
+        const toggleButton = document.getElementById('manual-header-toggle');
+        if (navPanel && toggleButton) {
+            toggleButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                navPanel.classList.toggle('nav-panel-hidden');
+            });
+        }
+    })();
+</script>
+<script src="../javascripts/imageloader.js" defer></script>
+</body>
+</html>

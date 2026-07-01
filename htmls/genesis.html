@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genesis | Joshua Hamilton</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <!-- Load Howler Engine Globally -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
+    <style>
+        /* -------------------------------------------------------------
+           CENTRALIZED SIZE CONFIGURATION VARIABLES
+        ------------------------------------------------------------- */
+        :root {
+            --player-row-height: 54px;   /* Height of both the button and waveform */
+            --arrow-height: 20px;        /* Absolute boundary size of the vector graphic */
+        }
+
+        /* -------------------------------------------------------------
+           ISOLATED DROPDOWN SYSTEM: Zero Horizontal Bleeding
+        ------------------------------------------------------------- */
+        .dropdown-group {
+            position: relative;
+            display: inline-block;
+        }
+
+        #manual-header-toggle {
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+        }
+
+        /* -------------------------------------------------------------
+           COSMIC COMPOSITION GRID & CORE INTERACTION LAYOUT
+        ------------------------------------------------------------- */
+        .composition-page-wrapper {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 160px 40px 80px 40px;
+            background-color: #050505;
+            box-sizing: border-box;
+        }
+
+        .composition-container {
+            width: 100%;
+            max-width: 850px;
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+        }
+
+        .composition-header {
+            text-align: center;
+        }
+
+        .composition-header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin: 0;
+            margin-bottom: 6px;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+
+        .composition-header p {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 0.5px;
+            margin: 0;
+        }
+
+        .composition-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 28px;
+            width: 100%;
+        }
+
+        .cosmic-audio-card {
+            position: relative;
+            background: rgba(15, 15, 15, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+            padding: 35px;
+            backdrop-filter: blur(25px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 240px;
+            overflow: hidden;
+            box-sizing: border-box;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, background-color 0.3s ease;
+        }
+
+        /* Fixed Layer: Bypasses global styles.css filters directly */
+        .card-space-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.40 !important; /* Base image opacity value matched to your specifications */
+            filter: brightness(1) !important; /* Strips external stylesheet darkener completely */
+            mix-blend-mode: normal !important; 
+            z-index: -2;
+            pointer-events: none;
+            transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Fixed Layer: Local mask layer that you can now modify easily */
+        .card-cosmic-glow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #050505; 
+            opacity: 0.05; /* Modify this number directly to alter unhovered brightness level cleanly */
+            z-index: -1;
+            pointer-events: none;
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cosmic-audio-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(219, 176, 74, 0.35);
+            background: rgba(20, 20, 20, 0.75);
+        }
+
+        .cosmic-audio-card:hover .card-cosmic-glow {
+            opacity: 0.20 !important;
+        }
+
+        .cosmic-audio-card:hover .card-space-bg {
+            opacity: 0.75 !important;
+            transform: scale(1.03);
+        }
+
+        .card-info-block h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0;
+            margin-bottom: 4px;
+            letter-spacing: -0.2px;
+            transition: color 0.3s ease;
+        }
+
+        .cosmic-audio-card:hover h2 {
+            color: #ffe082;
+        }
+
+        .card-info-block h3 {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: rgba(255, 255, 255, 0.35);
+            margin: 0;
+            margin-bottom: 14px;
+        }
+
+        .card-info-block p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.6);
+            margin: 0;
+        }
+
+        /* -------------------------------------------------------------
+           HIGH-FIDELITY CSS WAVEFORM MASK TIMELINE
+        ------------------------------------------------------------- */
+        .audio-deck-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-top: 24px;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        .deck-play-trigger {
+            background: rgba(255, 255, 255, 0.08) !important;
+            border: 1px solid rgba(219, 176, 74, 0.4) !important;
+            width: var(--player-row-height) !important;
+            height: var(--player-row-height) !important;
+            border-radius: 50% !important;
+            cursor: pointer !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            flex-shrink: 0 !important;
+            position: relative !important;
+            padding: 0 !important;
+            backdrop-filter: blur(8px) !important;
+            -webkit-backdrop-filter: blur(8px) !important;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+            transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease !important;
+        }
+
+        .deck-play-trigger:hover {
+            background-color: rgba(219, 176, 74, 0.15) !important;
+            border-color: #dbb04a !important;
+            transform: scale(1.05) !important;
+        }
+
+        .deck-play-trigger:active {
+            transform: scale(0.96) !important;
+        }
+
+        .play-pause-icon {
+            width: var(--arrow-height) !important;
+            height: var(--arrow-height) !important;
+            background-position: center center !important;
+            background-repeat: no-repeat !important;
+            background-size: contain !important;
+            transition: transform 0.2s ease !important;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23dbb04a'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E") !important;
+        }
+
+        .deck-play-trigger:hover .play-pause-icon {
+            transform: scale(1.08);
+        }
+
+        .cosmic-audio-card.playing .play-pause-icon {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23dbb04a'%3E%3Cpath d='M6 19h4V5H6v14zm8-14v14h4V5h-4z'/%3E%3C/svg%3E") !important;
+        }
+
+        .deck-waveform-mask-wrapper {
+            flex-grow: 1;
+            height: var(--player-row-height);
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 6px;
+        }
+
+        .waveform-mask-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.25);
+            -webkit-mask-size: 100% 100%;
+            mask-size: 100% 100%;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .waveform-progress-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background-color: #dbb04a;
+            pointer-events: none;
+            transition: filter 0.3s ease;
+        }
+
+        .cosmic-audio-card:hover .waveform-progress-fill,
+        .cosmic-audio-card.playing .waveform-progress-fill {
+            filter: drop-shadow(0 0 6px rgba(219, 176, 74, 0.6));
+        }
+
+        .cosmic-audio-card:hover .waveform-mask-layer {
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .cosmic-audio-card.playing .waveform-mask-layer {
+            background-color: rgba(255, 255, 255, 0.45);
+        }
+
+        @media (max-width: 850px) {
+            .composition-page-wrapper {
+                padding: 120px 20px 50px 20px;
+            }
+            .composition-header h1 {
+                font-size: 2.75rem;
+            }
+            .cosmic-audio-card {
+                padding: 28px;
+                min-height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header id="site-navigation">
+    <div class="nav-top-row">
+        <a href="../home.html" class="logo" style="text-decoration: none; font-weight: 700;">Joshua Hamilton</a>
+        <div class="header-actions">
+            <a href="./about.html" class="action-btn" id="btn-about" style="text-decoration: none; line-height: normal; display: flex; align-items: center;">About</a>
+            <a href="./contact.html" class="action-btn" id="btn-contact" style="text-decoration: none; line-height: normal; display: flex; align-items: center;">Contact</a>
+        </div>
+    </div>
+    
+    <div class="nav-bottom-row">
+        <nav class="dropdown-nav">
+            <a href="../home.html" class="nav-link" style="font-family: 'Inter', sans-serif; font-weight: 500; font-size: 0.8rem; color: rgba(255, 255, 255, 0.65); text-decoration: none; transition: color 0.2s ease;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='rgba(255, 255, 255, 0.65)'">Home</a>
+            
+            <!-- Projects Routing Setup -->
+            <div class="dropdown-group">
+                <a href="./projbuff.html" class="nav-link dropdown-trigger" style="text-decoration: none;">Projects</a>
+            </div>
+            
+            <!-- Compositions Routing Setup -->
+            <div class="dropdown-group">
+                <a href="./compbuff.html" class="nav-link dropdown-trigger" style="text-decoration: none; color: #ffffff;">Compositions</a>
+            </div>
+
+            <!-- Sound Design Routing Setup -->
+            <div class="dropdown-group">
+                <a href="./sdbuff.html" class="nav-link dropdown-trigger" style="text-decoration: none;">Sound Design</a>
+            </div>
+        </nav>
+    </div>
+
+    <button id="manual-header-toggle" aria-label="Toggle Navigation Panel">
+        <span class="toggle-arrow">▲</span>
+    </button>
+</header>
+
+<main class="composition-page-wrapper">
+    <div class="composition-container">
+        
+        <div class="composition-header">
+            <h1>Genesis</h1>
+            <p>By Joshua Hamilton</p>
+        </div>
+
+        <div class="composition-grid">
+            
+            <!-- Card 1: In The Beginning -->
+            <div class="cosmic-audio-card" data-audio="../assets/audio/GENESIS/1 IN THE BEGINNING.wav">
+                <div class="card-space-bg" style="background-image: url('../assets/Images/1 IN THE BEGINNING.webp');"></div>
+                <div class="card-cosmic-glow"></div>
+                <div class="card-info-block">
+                    <h3>Movement I</h3>
+                    <h2>In The Beginning</h2>
+                    <p>Promising, hopeful.</p>
+                </div>
+                <div class="audio-deck-row">
+                    <button class="deck-play-trigger" aria-label="Play Track">
+                        <div class="play-pause-icon"></div>
+                    </button>
+                    <div class="deck-waveform-mask-wrapper">
+                        <div class="waveform-mask-layer" style="-webkit-mask-image: url('../assets/Images/waveforms/in the beginning wf.png'); mask-image: url('../assets/Images/waveforms/in the beginning wf.png');">
+                            <div class="waveform-progress-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Celestial -->
+            <div class="cosmic-audio-card" data-audio="../assets/audio/GENESIS/2 CELESTIAL.wav">
+                <div class="card-space-bg" style="background-image: url('../assets/Images/2 CELESTIAL.webp');"></div>
+                <div class="card-cosmic-glow"></div>
+                <div class="card-info-block">
+                    <h3>Movement II</h3>
+                    <h2>Celestial</h2>
+                    <p>Etheral, euphoric, transcendent.</p>
+                </div>
+                <div class="audio-deck-row">
+                    <button class="deck-play-trigger" aria-label="Play Track">
+                        <div class="play-pause-icon"></div>
+                    </button>
+                    <div class="deck-waveform-mask-wrapper">
+                        <div class="waveform-mask-layer" style="-webkit-mask-image: url('../assets/Images/waveforms/celestial wf.png'); mask-image: url('../assets/Images/waveforms/celestial wf.png');">
+                            <div class="waveform-progress-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: The Fall -->
+            <div class="cosmic-audio-card" data-audio="../assets/audio/GENESIS/3 THE FALL.wav">
+                <div class="card-space-bg" style="background-image: url('../assets/Images/3 THE FALL.webp');"></div>
+                <div class="card-cosmic-glow"></div>
+                <div class="card-info-block">
+                    <h3>Movement III</h3>
+                    <h2>The Fall</h2>
+                    <p>Intense, we all fall at some point.</p>
+                </div>
+                <div class="audio-deck-row">
+                    <button class="deck-play-trigger" aria-label="Play Track">
+                        <div class="play-pause-icon"></div>
+                    </button>
+                    <div class="deck-waveform-mask-wrapper">
+                        <div class="waveform-mask-layer" style="-webkit-mask-image: url('../assets/Images/waveforms/the fall wf.png'); mask-image: url('../assets/Images/waveforms/the fall wf.png');">
+                            <div class="waveform-progress-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4: Consequences -->
+            <div class="cosmic-audio-card" data-audio="../assets/audio/GENESIS/4 CONSEQUENCES.wav">
+                <div class="card-space-bg" style="background-image: url('../assets/Images/4 CONSEQUENCES.webp');"></div>
+                <div class="card-cosmic-glow"></div>
+                <div class="card-info-block">
+                    <h3>Movement IV</h3>
+                    <h2>Consequences</h2>
+                    <p>Dramatic, tense. -the consequences of our actions-</p>
+                </div>
+                <div class="audio-deck-row">
+                    <button class="deck-play-trigger" aria-label="Play Track">
+                        <div class="play-pause-icon"></div>
+                    </button>
+                    <div class="deck-waveform-mask-wrapper">
+                        <div class="waveform-mask-layer" style="-webkit-mask-image: url('../assets/Images/waveforms/consequences wf.png'); mask-image: url('../assets/Images/waveforms/consequences wf.png');">
+                            <div class="waveform-progress-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 5: Humble -->
+            <div class="cosmic-audio-card" data-audio="../assets/audio/GENESIS/5 HUMBLE.wav">
+                <div class="card-space-bg" style="background-image: url('../assets/Images/5 HUMBLE.webp');"></div>
+                <div class="card-cosmic-glow"></div>
+                <div class="card-info-block">
+                    <h3>Movement V</h3>
+                    <h2>Humble</h2>
+                    <p>Humble, reflective, and deeply emotional.</p>
+                </div>
+                <div class="audio-deck-row">
+                    <button class="deck-play-trigger" aria-label="Play Track">
+                        <div class="play-pause-icon"></div>
+                    </button>
+                    <div class="deck-waveform-mask-wrapper">
+                        <div class="waveform-mask-layer" style="-webkit-mask-image: url('../assets/Images/waveforms/humble wf.png'); mask-image: url('../assets/Images/waveforms/humble wf.png');">
+                            <div class="waveform-progress-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 6: Grace -->
+            <div class="cosmic-audio-card" data-audio="../assets/audio/GENESIS/6 GRACE.wav">
+                <div class="card-space-bg" style="background-image: url('../assets/Images/6 GRACE.webp');"></div>
+                <div class="card-cosmic-glow"></div>
+                <div class="card-info-block">
+                    <h3>Movement VI</h3>
+                    <h2>Grace</h2>
+                    <p>A triumphant cinematic closure.</p>
+                </div>
+                <div class="audio-deck-row">
+                    <button class="deck-play-trigger" aria-label="Play Track">
+                        <div class="play-pause-icon"></div>
+                    </button>
+                    <div class="deck-waveform-mask-wrapper">
+                        <div class="waveform-mask-layer" style="-webkit-mask-image: url('../assets/Images/waveforms/grace wf.png'); mask-image: url('../assets/Images/waveforms/grace wf.png');">
+                            <div class="waveform-progress-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+
+<script>
+    (function() {
+        const navPanel = document.getElementById('site-navigation');
+        const toggleButton = document.getElementById('manual-header-toggle');
+        if (navPanel && toggleButton) {
+            toggleButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                navPanel.classList.toggle('nav-panel-hidden');
+            });
+        }
+
+        let activeTrackInstance = null;
+        let activeCardDOM = null;
+
+        const cards = document.querySelectorAll('.cosmic-audio-card');
+
+        cards.forEach(card => {
+            const audioSrc = card.getAttribute('data-audio');
+            const btn = card.querySelector('.deck-play-trigger');
+            const progressFill = card.querySelector('.waveform-progress-fill');
+            const scrubberWrapper = card.querySelector('.deck-waveform-mask-wrapper');
+
+            let soundInstance = new Howl({
+                src: [audioSrc],
+                html5: false,
+                onplay: function() {
+                    card.classList.add('playing');
+                    requestAnimationFrame(updateTimeline);
+                },
+                onpause: function() {
+                    card.classList.remove('playing');
+                },
+                onstop: function() {
+                    card.classList.remove('playing');
+                    progressFill.style.width = '0%';
+                },
+                onend: function() {
+                    card.classList.remove('playing');
+                    progressFill.style.width = '0%';
+                }
+            });
+
+            function updateTimeline() {
+                if (activeTrackInstance === soundInstance && soundInstance.playing()) {
+                    const duration = soundInstance.duration();
+                    if (duration && duration > 0) {
+                        let progress = (soundInstance.seek() / duration) * 100;
+                        progressFill.style.width = progress + '%';
+                    }
+                    requestAnimationFrame(updateTimeline);
+                }
+            }
+
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+
+                if (activeTrackInstance === soundInstance) {
+                    if (soundInstance.playing()) {
+                        soundInstance.pause();
+                    } else {
+                        soundInstance.play();
+                    }
+                } else {
+                    if (activeTrackInstance) {
+                        activeTrackInstance.stop();
+                        if (activeCardDOM) {
+                            activeCardDOM.classList.remove('playing');
+                            activeCardDOM.querySelector('.waveform-progress-fill').style.width = '0%';
+                        }
+                    }
+                    activeTrackInstance = soundInstance;
+                    activeCardDOM = card;
+                    soundInstance.play();
+                }
+            });
+
+            scrubberWrapper.addEventListener('click', (e) => {
+                const rect = e.currentTarget.getBoundingClientRect();
+                const clickX = e.clientX - rect.left;
+                const percentage = clickX / rect.width;
+
+                if (activeTrackInstance === soundInstance) {
+                    const duration = soundInstance.duration();
+                    if (duration && duration > 0) {
+                        const destination = percentage * duration;
+                        soundInstance.seek(destination);
+                        progressFill.style.width = (percentage * 100) + '%';
+                        
+                        if (!soundInstance.playing()) {
+                            soundInstance.play();
+                        } else {
+                            requestAnimationFrame(updateTimeline);
+                        }
+                    }
+                }
+            });
+        });
+    })();
+</script>
+<script src="../javascripts/imageloader.js" defer></script>
+</body>
+</html>
