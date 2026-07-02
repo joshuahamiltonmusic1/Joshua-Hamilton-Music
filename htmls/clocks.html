@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="preload" href="../assets/audio/CLOCKS/clocks.mp3" as="audio" type="audio/mpeg" crossorigin="anonymous">
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clocks | Joshua Hamilton</title>
@@ -8,7 +10,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/styles.css">
-    <!-- Load Howler Engine Globally -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
     <style>
         /* -------------------------------------------------------------
@@ -44,7 +45,7 @@
 
         .composition-container {
             width: 100%;
-            max-width: 850px; /* Adjusted back to match genesis layout width */
+            max-width: 850px; 
             display: flex;
             flex-direction: column;
             gap: 50px;
@@ -72,7 +73,6 @@
             margin: 0;
         }
 
-        /* Adjusted layout grid container explicitly to a single column */
         .composition-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -310,17 +310,14 @@
         <nav class="dropdown-nav">
            <a href="/index.html" class="nav-link" style="font-family: 'Inter', sans-serif; font-weight: 500; font-size: 0.8rem; color: rgba(255, 255, 255, 0.65); text-decoration: none; transition: color 0.2s ease;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='rgba(255, 255, 255, 0.65)'">Home</a>
             
-            <!-- Projects Routing Setup -->
             <div class="dropdown-group">
                 <a href="./projbuff.html" class="nav-link dropdown-trigger" style="text-decoration: none;">Projects</a>
             </div>
             
-            <!-- Compositions Routing Setup -->
             <div class="dropdown-group">
                 <a href="./compbuff.html" class="nav-link dropdown-trigger" style="text-decoration: none; color: #ffffff;">Compositions</a>
             </div>
 
-            <!-- Sound Design Routing Setup -->
             <div class="dropdown-group">
                 <a href="./sdbuff.html" class="nav-link dropdown-trigger" style="text-decoration: none;">Sound Design</a>
             </div>
@@ -342,7 +339,6 @@
 
         <div class="composition-grid">
             
-            <!-- Track 1: Abandoned -->
             <div class="cosmic-audio-card" data-audio="../assets/audio/CLOCKS/abandoned.mp3">
                 <div class="card-space-bg" style="background-image: url('../assets/Images/CLOCKS/abandoned.webp');"></div>
                 <div class="card-cosmic-glow"></div>
@@ -363,7 +359,6 @@
                 </div>
             </div>
 
-            <!-- Track 2: Absent -->
             <div class="cosmic-audio-card" data-audio="../assets/audio/CLOCKS/absent.mp3">
                 <div class="card-space-bg" style="background-image: url('../assets/Images/CLOCKS/absent.webp');"></div>
                 <div class="card-cosmic-glow"></div>
@@ -384,7 +379,6 @@
                 </div>
             </div>
 
-            <!-- Track 3: Clocks -->
             <div class="cosmic-audio-card" data-audio="../assets/audio/CLOCKS/clocks.mp3">
                 <div class="card-space-bg" style="background-image: url('../assets/Images/CLOCKS/clocks.webp');"></div>
                 <div class="card-cosmic-glow"></div>
@@ -405,7 +399,6 @@
                 </div>
             </div>
 
-            <!-- Track 4: Confined -->
             <div class="cosmic-audio-card" data-audio="../assets/audio/CLOCKS/confined.mp3">
                 <div class="card-space-bg" style="background-image: url('../assets/Images/CLOCKS/confined.webp');"></div>
                 <div class="card-cosmic-glow"></div>
@@ -426,7 +419,6 @@
                 </div>
             </div>
 
-            <!-- Track 5: Demonic -->
             <div class="cosmic-audio-card" data-audio="../assets/audio/CLOCKS/demonic.mp3">
                 <div class="card-space-bg" style="background-image: url('../assets/Images/CLOCKS/demonic.webp');"></div>
                 <div class="card-cosmic-glow"></div>
@@ -447,7 +439,6 @@
                 </div>
             </div>
 
-            <!-- Track 6: Mighty -->
             <div class="cosmic-audio-card" data-audio="../assets/audio/CLOCKS/mighty.mp3">
                 <div class="card-space-bg" style="background-image: url('../assets/Images/CLOCKS/mighty.webp');"></div>
                 <div class="card-cosmic-glow"></div>
@@ -468,7 +459,6 @@
                 </div>
             </div>
 
-            <!-- Track 7: Music -->
             <div class="cosmic-audio-card" data-audio="../assets/audio/CLOCKS/music.mp3">
                 <div class="card-space-bg" style="background-image: url('../assets/Images/CLOCKS/music.webp');"></div>
                 <div class="card-cosmic-glow"></div>
@@ -489,7 +479,6 @@
                 </div>
             </div>
 
-            <!-- Track 8: Realism -->
             <div class="cosmic-audio-card" data-audio="../assets/audio/CLOCKS/realism.mp3">
                 <div class="card-space-bg" style="background-image: url('../assets/Images/CLOCKS/realism.webp');"></div>
                 <div class="card-cosmic-glow"></div>
@@ -510,7 +499,6 @@
                 </div>
             </div>
 
-            <!-- Track 9: Sorrow -->
             <div class="cosmic-audio-card" data-audio="../assets/audio/CLOCKS/sorrow.mp3">
                 <div class="card-space-bg" style="background-image: url('../assets/Images/CLOCKS/sorrow.webp');"></div>
                 <div class="card-cosmic-glow"></div>
@@ -531,7 +519,6 @@
                 </div>
             </div>
 
-            <!-- Track 10: Waves -->
             <div class="cosmic-audio-card" data-audio="../assets/audio/CLOCKS/waves.mp3">
                 <div class="card-space-bg" style="background-image: url('../assets/Images/CLOCKS/waves.webp');"></div>
                 <div class="card-cosmic-glow"></div>
@@ -657,5 +644,24 @@
     })();
 </script>
 <script src="../javascripts/imageloader.js" defer></script>
+
+<script>
+    window.addEventListener('load', () => {
+        const queueExecutionMethod = window.requestIdleCallback || function(cb) { setTimeout(cb, 2000); };
+        queueExecutionMethod(() => {
+            const secondaryPool = [
+                '../assets/audio/GENESIS/1 IN THE BEGINNING.mp3',
+                '../assets/audio/PSYCHOLOGY/psychology.mp3',
+                '../assets/audio/GENESIS/2 CELESTIAL.mp3',
+                '../assets/audio/GENESIS/3 THE FALL.mp3'
+            ];
+            secondaryPool.forEach((audioUrl) => {
+                const backgroundFetch = new Audio();
+                backgroundFetch.src = audioUrl;
+                backgroundFetch.preload = 'auto';
+            });
+        });
+    });
+</script>
 </body>
 </html>

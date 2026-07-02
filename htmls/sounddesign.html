@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Priority 1: High-Priority Audio Streaming for Current Page -->
+    <link rel="preload" href="../assets/audio/SOUNDD/elevate - sd.mp3" as="audio" type="audio/mpeg" crossorigin="anonymous">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Elevate | Joshua Hamilton</title>
@@ -15,12 +18,6 @@
         .dropdown-group {
             position: relative;
             display: inline-block;
-        }
-
-        #site-navigation:has(.dropdown-group:hover) #manual-header-toggle {
-            opacity: 0 !important;
-            visibility: hidden !important;
-            pointer-events: none !important;
         }
 
         #manual-header-toggle {
@@ -144,7 +141,7 @@
             width: 100%;
             height: 100%;
             background: #050505;
-            opacity: 0.05; /* Increased resting brightness */
+            opacity: 0.05; 
             pointer-events: none;
             z-index: -1;
             transition: opacity 0.3s ease;
@@ -387,5 +384,24 @@
 </script>
 <script src="../javascripts/player.js"></script>
 <script src="../javascripts/imageloader.js" defer></script>
+
+<!-- Priority 2: Secondary Background Asset Loader Loop -->
+<script>
+    window.addEventListener('load', () => {
+        const queueExecutionMethod = window.requestIdleCallback || function(cb) { setTimeout(cb, 2000); };
+        queueExecutionMethod(() => {
+            const secondaryPool = [
+                '../assets/audio/SUBMERSION/submersion.mp3',
+                '../assets/audio/GENESIS/1 IN THE BEGINNING.mp3',
+                '../assets/audio/CLOCKS/clocks.mp3'
+            ];
+            secondaryPool.forEach((audioUrl) => {
+                const backgroundFetch = new Audio();
+                backgroundFetch.src = audioUrl;
+                backgroundFetch.preload = 'auto';
+            });
+        });
+    });
+</script>
 </body>
 </html>

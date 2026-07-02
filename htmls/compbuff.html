@@ -311,5 +311,32 @@
     })();
 </script>
 <script src="../javascripts/imageloader.js" defer></script>
+<script>
+    window.addEventListener('load', () => {
+        // Pool of composition audio tracks to warm up in cache
+        const compositionTracks = [
+            '../assets/audio/CLOCKS/abandoned.mp3',
+            '../assets/audio/CLOCKS/absent.mp3',
+            '../assets/audio/CLOCKS/clocks.mp3',
+            '../assets/audio/CLOCKS/confined.mp3',
+            '../assets/audio/CLOCKS/demonic.mp3',
+            '../assets/audio/CLOCKS/mighty.mp3',
+            '../assets/audio/CLOCKS/music.mp3',
+            '../assets/audio/CLOCKS/realism.mp3',
+            '../assets/audio/CLOCKS/sorrow.mp3',
+            '../assets/audio/CLOCKS/waves.mp3',
+            '../assets/audio/psychology.mp3' // Remember to convert this from WAV to MP3 to respect your speed guidelines!
+        ];
+
+        // Process sequentially with a light buffer to preserve interface rendering speeds
+        compositionTracks.forEach((trackUrl, index) => {
+            setTimeout(() => {
+                const audioPreloader = new Audio();
+                audioPreloader.src = trackUrl;
+                audioPreloader.preload = 'auto';
+            }, index * 1200); // Spaces out requests by 1.2 seconds to run completely unnoticed
+        });
+    });
+</script>
 </body>
 </html>

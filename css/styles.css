@@ -578,3 +578,13 @@ button:hover { background-color: #ccc; }
     margin-top: 24px;
     margin-bottom: 8px;
 }
+/* ==========================================
+   11. GLOBAL VISITED NAV LINK PATCH
+   ========================================== */
+#site-navigation .nav-link,
+#site-navigation .nav-link:visited,
+#site-navigation .nav-link:active,
+#site-navigation .nav-link:hover {
+    color: #ffffff !important;
+    text-decoration: none !important;
+}

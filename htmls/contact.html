@@ -120,17 +120,14 @@
         <nav class="dropdown-nav">
            <a href="/index.html" class="nav-link" style="font-family: 'Inter', sans-serif; font-weight: 500; font-size: 0.8rem; color: rgba(255, 255, 255, 0.65); text-decoration: none; transition: color 0.2s ease;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='rgba(255, 255, 255, 0.65)'">Home</a>
             
-            <!-- Projects Routing Setup -->
             <div class="dropdown-group">
                 <a href="./projbuff.html" class="nav-link dropdown-trigger" style="text-decoration: none;">Projects</a>
             </div>
             
-            <!-- Compositions Routing Setup -->
             <div class="dropdown-group">
                 <a href="./compbuff.html" class="nav-link dropdown-trigger" style="text-decoration: none;">Compositions</a>
             </div>
 
-            <!-- Sound Design Routing Setup -->
             <div class="dropdown-group">
                 <a href="./sdbuff.html" class="nav-link dropdown-trigger" style="text-decoration: none;">Sound Design</a>
             </div>
@@ -159,11 +156,8 @@
         </div>
 
         <form id="contact-portfolio-form" action="https://api.web3forms.com/submit" method="POST">
-            <!-- Web3Forms Mandatory Configuration Node Key Alias -->
-            <!-- Paste your generated token value string right inside the value="" attribute down below -->
             <input type="hidden" name="access_key" value="b09cf95a-0e74-4523-aeb8-9cbb92ecf547">
             
-            <!-- Honeypot Bot Spam Check Engine Block -->
             <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
 
             <div class="contact-form-group">
@@ -257,5 +251,24 @@
     })();
 </script>
 <script src="../javascripts/imageloader.js" defer></script>
+
+<script>
+    window.addEventListener('load', () => {
+        const queueExecutionMethod = window.requestIdleCallback || function(cb) { setTimeout(cb, 2000); };
+        queueExecutionMethod(() => {
+            const secondaryPool = [
+                '../assets/audio/GENESIS/1 IN THE BEGINNING.mp3',
+                '../assets/audio/PSYCHOLOGY/psychology.mp3',
+                '../assets/audio/CLOCKS/clocks.mp3',
+                '../assets/audio/LIVE WILD/live wild.mp3'
+            ];
+            secondaryPool.forEach((audioUrl) => {
+                const backgroundFetch = new Audio();
+                backgroundFetch.src = audioUrl;
+                backgroundFetch.preload = 'auto';
+            });
+        });
+    });
+</script>
 </body>
 </html>

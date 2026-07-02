@@ -63,26 +63,23 @@
             border-color: rgba(219, 176, 74, 0.3);
             background: rgba(255, 255, 255, 0.02);
         }
-       /* UPDATED HOVER GLOW STATE: */
-.portal-card .card-glow-backdrop {
-    position: absolute; /* Already exists in your code */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(1);
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.02) 0%, rgba(0, 0, 0, 0) 80%);
-    z-index: -1;
-    pointer-events: none;
-    /* Added a smooth transition property for the transform scale */
-    transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
+        
+        .portal-card .card-glow-backdrop {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1);
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.02) 0%, rgba(0, 0, 0, 0) 80%);
+            z-index: -1;
+            pointer-events: none;
+            transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
 
-.portal-card:hover .card-glow-backdrop {
-    /* Dialed the opacity from 0.06 up to 0.22 and compressed the fade boundary for prominence */
-    background: radial-gradient(circle, rgba(219, 176, 74, 0.42) 0%, rgba(0, 0, 0, 0) 90%);
-    /* Expands the glow out visually past the card walls on hover */
-    transform: translate(-50%, -50%) scale(1.4); 
+        .portal-card:hover .card-glow-backdrop {
+            background: radial-gradient(circle, rgba(219, 176, 74, 0.42) 0%, rgba(0, 0, 0, 0) 90%);
+            transform: translate(-50%, -50%) scale(1.4); 
         }
         .portal-card h2 {
             font-size: 1.5rem;
@@ -109,6 +106,16 @@
             color: rgba(255, 255, 255, 0.6);
             margin: 0;
         }
+        
+        /* HARD OVERRIDE FOR NAVIGATION VISITED BUG */
+        #site-navigation .nav-link,
+        #site-navigation .nav-link:visited,
+        #site-navigation .nav-link:active,
+        #site-navigation .nav-link:hover {
+            color: #ffffff !important;
+            text-decoration: none !important;
+        }
+
         @media (max-width: 768px) {
             .home-page-wrapper { padding: 110px 20px 40px 20px; }
             .portal-card { padding: 30px; min-height: auto; }
@@ -128,7 +135,7 @@
     
     <div class="nav-bottom-row">
         <nav class="dropdown-nav">
-            <a href="/index.html" class="nav-link" style="font-family: 'Inter', sans-serif; font-weight: 500; font-size: 0.8rem; color: #ffffff; text-decoration: none;">Home</a>
+            <a href="/index.html" class="nav-link" style="font-family: 'Inter', sans-serif; font-weight: 500; font-size: 0.8rem; color: #ffffff; text-decoration: none !important;">Home</a>
             
             <div class="dropdown-group">
                 <a href="./htmls/projbuff.html" class="nav-link dropdown-trigger" style="text-decoration: none;">Projects</a>
@@ -218,5 +225,26 @@
     })();
 </script>
 <script src="./javascripts/imageloader.js" defer></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const microAssets = [
+            '/css/styles.css',
+            '/javascripts/imageloader.js',
+            // Add paths to your UI icons or lightweight logos here (e.g., '/assets/Images/logo.png')
+        ];
+
+        microAssets.forEach(asset => {
+            const link = document.createElement('link');
+            link.rel = 'preload';
+            link.href = asset;
+            // Check if it's a script or stylesheet to allocate appropriate loading properties
+            if (asset.endsWith('.css')) link.as = 'style';
+            else if (asset.endsWith('.js')) link.as = 'script';
+            else link.as = 'image';
+            
+            document.head.appendChild(link);
+        });
+    });
+</script>
 </body>
 </html>
