@@ -388,7 +388,7 @@
 
             let soundInstance = new Howl({
                 src: [audioSrc],
-                html5: false,
+                html5: true,
                 onplay: function() {
                     card.classList.add('playing');
                     requestAnimationFrame(updateTimeline);
@@ -465,23 +465,6 @@
 </script>
 <script src="../javascripts/imageloader.js" defer></script>
 
-<script>
-    window.addEventListener('load', () => {
-        const queueExecutionMethod = window.requestIdleCallback || function(cb) { setTimeout(cb, 2000); };
-        queueExecutionMethod(() => {
-            const secondaryPool = [
-                '../assets/audio/GENESIS/1 IN THE BEGINNING.mp3',
-                '../assets/audio/CLOCKS/clocks.mp3',
-                '../assets/audio/CLOCKS/abandoned.mp3',
-                '../assets/audio/CLOCKS/absent.mp3'
-            ];
-            secondaryPool.forEach((audioUrl) => {
-                const backgroundFetch = new Audio();
-                backgroundFetch.src = audioUrl;
-                backgroundFetch.preload = 'auto';
-            });
-        });
-    });
-</script>
+
 </body>
 </html>

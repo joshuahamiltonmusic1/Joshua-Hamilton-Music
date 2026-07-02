@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="preload" href="../assets/audio/CLOCKS/clocks.mp3" as="audio" type="audio/mpeg" crossorigin="anonymous">
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clocks | Joshua Hamilton</title>
@@ -452,7 +450,7 @@
                         <div class="play-pause-icon"></div>
                     </button>
                     <div class="deck-waveform-mask-wrapper">
-                        <div class="waveform-mask-layer" style="-webkit-mask-image: url('../assets/Images/waveforms/CLOCKS WFS/mighty wf.png'); mask-image: url('../assets/Images/waveforms/CLOCKS WFS/[track-name] wf.png');">
+                        <div class="waveform-mask-layer" style="-webkit-mask-image: url('../assets/Images/waveforms/CLOCKS WFS/mighty wf.png'); mask-image: url('../assets/Images/waveforms/CLOCKS WFS/mighty wf.png');">
                             <div class="waveform-progress-fill"></div>
                         </div>
                     </div>
@@ -568,7 +566,7 @@
 
             let soundInstance = new Howl({
                 src: [audioSrc],
-                html5: false,
+                html5: true,
                 onplay: function() {
                     card.classList.add('playing');
                     requestAnimationFrame(updateTimeline);
@@ -644,24 +642,5 @@
     })();
 </script>
 <script src="../javascripts/imageloader.js" defer></script>
-
-<script>
-    window.addEventListener('load', () => {
-        const queueExecutionMethod = window.requestIdleCallback || function(cb) { setTimeout(cb, 2000); };
-        queueExecutionMethod(() => {
-            const secondaryPool = [
-                '../assets/audio/GENESIS/1 IN THE BEGINNING.mp3',
-                '../assets/audio/PSYCHOLOGY/psychology.mp3',
-                '../assets/audio/GENESIS/2 CELESTIAL.mp3',
-                '../assets/audio/GENESIS/3 THE FALL.mp3'
-            ];
-            secondaryPool.forEach((audioUrl) => {
-                const backgroundFetch = new Audio();
-                backgroundFetch.src = audioUrl;
-                backgroundFetch.preload = 'auto';
-            });
-        });
-    });
-</script>
 </body>
 </html>

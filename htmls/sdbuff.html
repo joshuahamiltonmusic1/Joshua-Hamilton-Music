@@ -313,19 +313,7 @@
     </div>
 </main>
 
-<script>
-    (function() {
-        const navPanel = document.getElementById('site-navigation');
-        const toggleButton = document.getElementById('manual-header-toggle');
-        if (navPanel && toggleButton) {
-            toggleButton.addEventListener('click', (e) => {
-                e.stopPropagation();
-                e.preventDefault();
-                navPanel.classList.toggle('nav-panel-hidden');
-            });
-        }
-    })();
-</script>
+
 <script src="../javascripts/imageloader.js" defer></script>
 </body>
 </html>

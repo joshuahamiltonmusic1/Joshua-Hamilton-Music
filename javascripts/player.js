@@ -17,6 +17,9 @@
 
             const audioSrc = playButton.getAttribute('data-track-src');
             let audio = new Audio(audioSrc);
+            
+            // WEBBER PATCH: Force strict metadata preloading for iOS streaming stability
+            audio.preload = 'metadata';
             let isPlaying = false;
 
             // Format time utility (e.g., 0:00)

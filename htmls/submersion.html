@@ -386,22 +386,6 @@
 <script src="../javascripts/imageloader.js" defer></script>
 
 <!-- Priority 2: Secondary Background Asset Loader Loop -->
-<script>
-    window.addEventListener('load', () => {
-        const queueExecutionMethod = window.requestIdleCallback || function(cb) { setTimeout(cb, 2000); };
-        queueExecutionMethod(() => {
-            const secondaryPool = [
-                '../assets/audio/SOUNDD/elevate - sd.mp3',
-                '../assets/audio/GENESIS/1 IN THE BEGINNING.mp3',
-                '../assets/audio/CLOCKS/clocks.mp3'
-            ];
-            secondaryPool.forEach((audioUrl) => {
-                const backgroundFetch = new Audio();
-                backgroundFetch.src = audioUrl;
-                backgroundFetch.preload = 'auto';
-            });
-        });
-    });
-</script>
+
 </body>
 </html>

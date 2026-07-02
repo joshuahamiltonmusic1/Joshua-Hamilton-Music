@@ -16,8 +16,8 @@
            CENTRALIZED SIZE CONFIGURATION VARIABLES
         ------------------------------------------------------------- */
         :root {
-            --player-row-height: 54px;   /* Height of both the button and waveform */
-            --arrow-height: 20px;        /* Absolute boundary size of the vector graphic */
+            --player-row-height: 54px;   
+            --arrow-height: 20px;        
         }
 
         /* -------------------------------------------------------------
@@ -99,7 +99,6 @@
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, background-color 0.3s ease;
         }
 
-        /* Fixed Layer: Bypasses global styles.css filters directly */
         .card-space-bg {
             position: absolute;
             top: 0;
@@ -108,15 +107,14 @@
             height: 100%;
             background-size: cover;
             background-position: center;
-            opacity: 0.40 !important; /* Base image opacity value matched to your specifications */
-            filter: brightness(1) !important; /* Strips external stylesheet darkener completely */
+            opacity: 0.40 !important; 
+            filter: brightness(1) !important; 
             mix-blend-mode: normal !important; 
             z-index: -2;
             pointer-events: none;
             transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Fixed Layer: Local mask layer that you can now modify easily */
         .card-cosmic-glow {
             position: absolute;
             top: 0;
@@ -124,7 +122,7 @@
             width: 100%;
             height: 100%;
             background: #050505; 
-            opacity: 0.05; /* Modify this number directly to alter unhovered brightness level cleanly */
+            opacity: 0.05; 
             z-index: -1;
             pointer-events: none;
             transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -493,7 +491,7 @@
 
             let soundInstance = new Howl({
                 src: [audioSrc],
-                html5: false,
+                html5: true,
                 onplay: function() {
                     card.classList.add('playing');
                     requestAnimationFrame(updateTimeline);
@@ -570,23 +568,5 @@
 </script>
 <script src="../javascripts/imageloader.js" defer></script>
 
-<script>
-    window.addEventListener('load', () => {
-        const queueExecutionMethod = window.requestIdleCallback || function(cb) { setTimeout(cb, 2000); };
-        queueExecutionMethod(() => {
-            const secondaryPool = [
-                '../assets/audio/PSYCHOLOGY/psychology.mp3',
-                '../assets/audio/CLOCKS/clocks.mp3',
-                '../assets/audio/CLOCKS/abandoned.mp3',
-                '../assets/audio/CLOCKS/absent.mp3'
-            ];
-            secondaryPool.forEach((audioUrl) => {
-                const backgroundFetch = new Audio();
-                backgroundFetch.src = audioUrl;
-                backgroundFetch.preload = 'auto';
-            });
-        });
-    });
-</script>
 </body>
 </html>

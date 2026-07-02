@@ -311,7 +311,7 @@
            <a href="/index.html" class="nav-link" style="font-family: 'Inter', sans-serif; font-weight: 500; font-size: 0.8rem; color: rgba(255, 255, 255, 0.65); text-decoration: none; transition: color 0.2s ease;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='rgba(255, 255, 255, 0.65)'">Home</a>
             
             <div class="dropdown-group">
-                <a href="./projbuff.html" class="nav-link dropdown-trigger" style="text-decoration: none; color: #ffffff;">Projects</a>
+                <a href="./projbuff.html" class="nav-link dropdown-trigger" style="text-decoration: none;">Projects</a>
             </div>
             
             <div class="dropdown-group">
@@ -388,7 +388,7 @@
 
             let soundInstance = new Howl({
                 src: [audioSrc],
-                html5: false,
+                html5: true,
                 onplay: function() {
                     card.classList.add('playing');
                     requestAnimationFrame(updateTimeline);
@@ -484,21 +484,6 @@
     });
 </script>
 <!-- Low-Priority Sound Design Showcase Preloader -->
-<script>
-    window.addEventListener('load', () => {
-        const soundDesignMedia = [
-            '../assets/audio/SOUNDD/elevate - sd.mp3',
-            '../assets/audio/SUBMERSION/submersion.mp3'
-        ];
 
-        soundDesignMedia.forEach((trackUrl, index) => {
-            setTimeout(() => {
-                const backgroundFetch = new Audio();
-                backgroundFetch.src = trackUrl;
-                backgroundFetch.preload = 'auto';
-            }, index * 1500); // 1.5-second sequential delay
-        });
-    });
-</script>
 </body>
 </html>
